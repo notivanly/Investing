@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>First Dollar — Learn to Invest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:   #0B1426;
+  --navy2:  #111E35;
+  --blue:   #2563EB;
+  --blue2:  #1D4ED8;
+  --gold:   #F59E0B;
+  --gold2:  #D97706;
+  --slate:  #64748B;
+  --light:  #F8FAFC;
+  --ink:    #1E293B;
+  --white:  #FFFFFF;
+  --border: #E2E8F0;
+  --green:  #10B981;
+  --red:    #EF4444;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--white);line-height:1.6;}
+h1,h2,h3,h4,.num{font-family:'Space Grotesk',sans-serif;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:18px 5%;background:rgba(11,20,38,.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08);}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;color:var(--white);letter-spacing:-.3px;}
+.nav-logo span{color:var(--gold);}
+.nav-links{display:flex;gap:28px;list-style:none;}
+.nav-links a{color:rgba(255,255,255,.7);text-decoration:none;font-size:14px;font-weight:500;transition:color .15s;}
+.nav-links a:hover{color:var(--white);}
+.nav-cta{background:var(--gold);color:var(--navy);font-weight:700;font-size:14px;padding:9px 20px;border-radius:8px;text-decoration:none;font-family:'Space Grotesk',sans-serif;}
+
+/* HERO */
+.hero{min-height:100vh;background:var(--navy);display:flex;align-items:center;padding:120px 5% 80px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(37,99,235,.18) 0%,transparent 65%);}
+.hero-content{max-width:640px;position:relative;z-index:1;}
+.hero-tag{display:inline-block;background:rgba(245,158,11,.15);color:var(--gold);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:20px;border:1px solid rgba(245,158,11,.3);margin-bottom:28px;}
+.hero h1{font-size:clamp(38px,5.5vw,68px);font-weight:700;line-height:1.05;color:var(--white);margin-bottom:24px;letter-spacing:-.5px;}
+.hero h1 em{font-style:normal;color:var(--gold);}
+.hero p{font-size:clamp(16px,1.8vw,19px);color:rgba(255,255,255,.65);max-width:520px;line-height:1.7;margin-bottom:36px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-primary{background:var(--blue);color:var(--white);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;padding:14px 28px;border-radius:10px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background .15s,transform .1s;}
+.btn-primary:hover{background:var(--blue2);transform:translateY(-1px);}
+.btn-ghost{border:1.5px solid rgba(255,255,255,.25);color:var(--white);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:15px;padding:13px 28px;border-radius:10px;text-decoration:none;transition:border-color .15s;}
+.btn-ghost:hover{border-color:rgba(255,255,255,.6);}
+.hero-stats{display:flex;gap:40px;margin-top:56px;padding-top:40px;border-top:1px solid rgba(255,255,255,.1);flex-wrap:wrap;}
+.stat-item .stat-num{font-size:32px;font-weight:700;color:var(--white);letter-spacing:-.5px;}
+.stat-item .stat-num span{color:var(--gold);}
+.stat-item .stat-label{font-size:13px;color:rgba(255,255,255,.5);margin-top:2px;}
+.hero-visual{position:absolute;right:5%;top:50%;transform:translateY(-50%);width:380px;opacity:.12;pointer-events:none;}
+
+/* INFLATION BAR */
+.inflation-bar{background:var(--navy2);padding:20px 5%;display:flex;align-items:center;gap:16px;justify-content:center;flex-wrap:wrap;}
+.infl-label{font-size:13px;color:rgba(255,255,255,.6);font-weight:500;}
+.infl-value{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;}
+.infl-value.bad{color:var(--red);}
+.infl-value.good{color:var(--green);}
+.infl-sep{width:1px;height:20px;background:rgba(255,255,255,.15);}
+
+/* SECTIONS */
+section{padding:96px 5%;}
+.section-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--blue);margin-bottom:12px;}
+.section-title{font-size:clamp(28px,3.5vw,42px);font-weight:700;color:var(--ink);line-height:1.2;margin-bottom:16px;letter-spacing:-.3px;}
+.section-sub{font-size:17px;color:var(--slate);max-width:560px;line-height:1.65;}
+.section-header{margin-bottom:56px;}
+
+/* WHY INVEST */
+.why{background:var(--light);}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;}
+@media(max-width:640px){.why-grid{grid-template-columns:1fr;}}
+.why-card{background:var(--white);border-radius:16px;padding:28px;border:1px solid var(--border);}
+.why-card.accent{background:var(--navy);border-color:var(--navy);}
+.why-card.accent .why-title{color:var(--white);}
+.why-card.accent .why-body{color:rgba(255,255,255,.6);}
+.why-icon{font-size:28px;margin-bottom:16px;}
+.why-title{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.why-body{font-size:14px;color:var(--slate);line-height:1.6;}
+.why-num{font-family:'Space Grotesk',sans-serif;font-size:36px;font-weight:700;color:var(--gold);margin:8px 0;}
+
+/* CONCEPTS */
+.concepts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+.concept-card{border-radius:16px;padding:28px;border:1.5px solid var(--border);cursor:pointer;transition:border-color .2s,box-shadow .2s;position:relative;overflow:hidden;}
+.concept-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:16px 16px 0 0;}
+.concept-card.stocks::before{background:var(--blue);}
+.concept-card.bonds::before{background:var(--green);}
+.concept-card.etfs::before{background:var(--gold);}
+.concept-card.index::before{background:#8B5CF6;}
+.concept-card:hover{border-color:var(--blue);box-shadow:0 4px 24px rgba(37,99,235,.1);}
+.concept-tag{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:12px;display:inline-block;padding:4px 10px;border-radius:20px;}
+.concept-tag.stocks{background:rgba(37,99,235,.1);color:var(--blue);}
+.concept-tag.bonds{background:rgba(16,185,129,.1);color:var(--green);}
+.concept-tag.etfs{background:rgba(245,158,11,.1);color:var(--gold2);}
+.concept-tag.index{background:rgba(139,92,246,.1);color:#8B5CF6;}
+.concept-card h3{font-size:20px;font-weight:700;margin-bottom:10px;color:var(--ink);}
+.concept-card p{font-size:14px;color:var(--slate);line-height:1.6;}
+.concept-meta{margin-top:16px;padding-top:16px;border-top:1px solid var(--border);display:flex;gap:16px;}
+.meta-item{font-size:12px;}
+.meta-item .meta-label{color:var(--slate);}
+.meta-item .meta-val{font-weight:600;color:var(--ink);font-family:'Space Grotesk',sans-serif;}
+
+/* CALCULATOR */
+.calculator-section{background:var(--navy);color:var(--white);}
+.calculator-section .section-label{color:var(--gold);}
+.calculator-section .section-title{color:var(--white);}
+.calculator-section .section-sub{color:rgba(255,255,255,.6);}
+.calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:56px;align-items:start;}
+@media(max-width:768px){.calc-wrap{grid-template-columns:1fr;}}
+.calc-inputs{display:flex;flex-direction:column;gap:24px;}
+.input-group label{font-size:13px;font-weight:600;color:rgba(255,255,255,.7);display:flex;justify-content:space-between;margin-bottom:10px;}
+.input-group label span{color:var(--gold);font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;}
+input[type=range]{width:100%;height:6px;border-radius:3px;appearance:none;background:rgba(255,255,255,.15);outline:none;cursor:pointer;}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:20px;height:20px;background:var(--gold);border-radius:50%;cursor:pointer;border:2px solid var(--navy);}
+.calc-results{background:rgba(255,255,255,.06);border-radius:20px;padding:32px;border:1px solid rgba(255,255,255,.1);}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.result-row:last-of-type{border-bottom:none;}
+.result-label{font-size:13px;color:rgba(255,255,255,.55);}
+.result-val{font-family:'Space Grotesk',sans-serif;font-size:22px;font-weight:700;}
+.result-val.invested{color:rgba(255,255,255,.7);}
+.result-val.returns{color:var(--gold);}
+.result-val.total{color:var(--green);font-size:28px;}
+.chart-bars{display:flex;align-items:flex-end;gap:8px;height:160px;margin-top:24px;padding-top:8px;}
+.bar-group{flex:1;display:flex;gap:3px;align-items:flex-end;position:relative;}
+.bar{border-radius:4px 4px 0 0;transition:height .4s ease;min-height:4px;}
+.bar.invested-bar{background:rgba(255,255,255,.2);}
+.bar.growth-bar{background:var(--gold);}
+.chart-x{display:flex;justify-content:space-between;margin-top:8px;}
+.chart-x span{font-size:10px;color:rgba(255,255,255,.35);font-family:'Space Grotesk',sans-serif;}
+.chart-legend{display:flex;gap:16px;margin-top:12px;}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:rgba(255,255,255,.55);}
+.legend-dot{width:10px;height:10px;border-radius:50%;}
+
+/* STEPS */
+.steps-section{background:var(--light);}
+.steps-list{display:flex;flex-direction:column;gap:0;margin-top:56px;max-width:760px;}
+.step-item{display:grid;grid-template-columns:64px 1fr;gap:24px;padding:32px 0;border-bottom:1px solid var(--border);position:relative;}
+.step-item:last-child{border-bottom:none;}
+.step-num{width:48px;height:48px;background:var(--navy);color:var(--white);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.step-content h3{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.step-content p{font-size:15px;color:var(--slate);line-height:1.65;}
+.step-tip{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.08);border:1px solid rgba(37,99,235,.15);color:var(--blue);font-size:12px;font-weight:600;padding:5px 12px;border-radius:20px;margin-top:12px;}
+
+/* MISTAKES */
+.mistakes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.mistake-card{padding:24px;border-radius:14px;border:1.5px solid #FEE2E2;background:#FFF5F5;}
+.mistake-card .mistake-x{color:var(--red);font-size:20px;margin-bottom:12px;}
+.mistake-card h3{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.mistake-card p{font-size:13px;color:var(--slate);line-height:1.55;}
+.fix-badge{display:inline-flex;align-items:center;gap:5px;background:#ECFDF5;color:var(--green);font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;border:1px solid #A7F3D0;margin-top:10px;}
+
+/* GLOSSARY */
+.glossary-section{background:var(--navy);}
+.glossary-section .section-title{color:var(--white);}
+.glossary-section .section-label{color:var(--gold);}
+.glossary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:48px;}
+.term-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:20px;cursor:pointer;transition:background .15s;}
+.term-card:hover{background:rgba(255,255,255,.08);}
+.term-word{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:16px;color:var(--white);margin-bottom:6px;}
+.term-def{font-size:13px;color:rgba(255,255,255,.55);line-height:1.5;}
+
+/* CTA */
+.cta-section{background:var(--blue);text-align:center;padding:96px 5%;}
+.cta-section h2{font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--white);margin-bottom:16px;letter-spacing:-.3px;}
+.cta-section p{font-size:17px;color:rgba(255,255,255,.75);margin-bottom:36px;max-width:500px;margin-left:auto;margin-right:auto;}
+.btn-white{background:var(--white);color:var(--blue);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;padding:14px 32px;border-radius:10px;text-decoration:none;display:inline-block;transition:transform .1s;}
+.btn-white:hover{transform:translateY(-1px);}
+
+/* FOOTER */
+footer{background:var(--navy);padding:40px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid rgba(255,255,255,.08);}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;color:var(--white);}
+.footer-logo span{color:var(--gold);}
+.footer-disclaimer{font-size:11px;color:rgba(255,255,255,.3);max-width:520px;line-height:1.6;}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:13px;}
+
+/* MOBILE */
+@media(max-width:768px){
+  .nav-links{display:none;}
+  .why-grid{grid-template-columns:1fr;}
+  .hero{padding:100px 5% 60px;}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">First<span>Dollar</span></div>
+  <ul class="nav-links">
+    <li><a href="#why">Why Invest</a></li>
+    <li><a href="#concepts">Concepts</a></li>
+    <li><a href="#calculator">Calculator</a></li>
+    <li><a href="#steps">Get Started</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+  </ul>
+  <a href="#steps" class="nav-cta">Start Investing →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">Free Investing Education</div>
+    <h1>Your money is<br><em>losing value</em><br>right now.</h1>
+    <p>Inflation erodes cash sitting in a savings account. Investing is how ordinary people protect — and grow — their wealth over time. Here's everything you need to start.</p>
+    <div class="hero-btns">
+      <a href="#why" class="btn-primary">Learn the basics ↓</a>
+      <a href="#calculator" class="btn-ghost">See your potential</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num"><span id="market-return">10</span>%</div>
+        <div class="stat-label">Avg annual S&P 500 return</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span>2–3</span>%</div>
+        <div class="stat-label">Typical savings account rate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num"><span>$1</span> → <span>$7</span></div>
+        <div class="stat-label">$1 invested 20 years ago in S&P 500</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFLATION BAR -->
+<div class="inflation-bar">
+  <span class="infl-label">Today's approximate figures:</span>
+  <span class="infl-value bad">Inflation: ~3% / year</span>
+  <div class="infl-sep"></div>
+  <span class="infl-value bad">High-yield savings: ~4.5%</span>
+  <div class="infl-sep"></div>
+  <span class="infl-value good">S&P 500 historic avg: ~10% / year</span>
+  <div class="infl-sep"></div>
+  <span class="infl-label" style="font-size:11px;color:rgba(255,255,255,.35)">*Past returns don't guarantee future results</span>
+</div>
+
+<!-- WHY INVEST -->
+<section class="why" id="why">
+  <div class="section-header">
+    <div class="section-label">Why It Matters</div>
+    <h2 class="section-title">Cash savings<br>aren't enough.</h2>
+    <p class="section-sub">A dollar today buys less than a dollar did 10 years ago. Investing is how you stay ahead of inflation and build real wealth.</p>
+  </div>
+  <div class="why-grid">
+    <div class="why-card accent">
+      <div class="why-icon">📉</div>
+      <div class="why-title">What happens if you don't invest</div>
+      <div class="why-num">−27%</div>
+      <div class="why-body">$10,000 in a checking account (earning ~0.5%) over 10 years loses about 27% of its purchasing power after inflation. Your $10,000 feels like $7,300 in today's money.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📈</div>
+      <div class="why-title">What happens when you invest</div>
+      <div class="why-num">+$15,937</div>
+      <div class="why-body">$10,000 invested in a broad index fund earning ~10% annually for 10 years becomes $25,937. That's the power of compound growth working for you instead of against you.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">⏰</div>
+      <div class="why-title">Time is your biggest asset</div>
+      <div class="why-body">Someone who starts investing at 25 and stops at 35 will have <strong>more money at 65</strong> than someone who starts at 35 and never stops — because of compound interest. Starting early beats investing more.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🧮</div>
+      <div class="why-title">The rule of 72</div>
+      <div class="why-body">Divide 72 by your annual return rate to find how many years it takes to double your money. At 10%: <strong>72 ÷ 10 = 7.2 years</strong> to double. At 1% savings: 72 years. The math favors investing.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCEPTS -->
+<section id="concepts">
+  <div class="section-header">
+    <div class="section-label">The Building Blocks</div>
+    <h2 class="section-title">4 things you need<br>to understand first.</h2>
+    <p class="section-sub">You don't need to master all of finance. These four concepts cover 90% of what most investors actually use.</p>
+  </div>
+  <div class="concepts-grid">
+    <div class="concept-card stocks">
+      <span class="concept-tag stocks">Stocks</span>
+      <h3>Pieces of a company</h3>
+      <p>When you buy a stock, you own a small piece of that company. If the company grows and profits, your share is worth more. If it struggles, it's worth less. Higher potential reward, higher risk.</p>
+      <div class="concept-meta">
+        <div class="meta-item"><div class="meta-label">Risk level</div><div class="meta-val">Medium–High</div></div>
+        <div class="meta-item"><div class="meta-label">Time horizon</div><div class="meta-val">5+ years</div></div>
+        <div class="meta-item"><div class="meta-label">Avg return</div><div class="meta-val">~10%/yr</div></div>
+      </div>
+    </div>
+    <div class="concept-card bonds">
+      <span class="concept-tag bonds">Bonds</span>
+      <h3>Loans you give out</h3>
+      <p>When you buy a bond, you're lending money to a government or company. They pay you back with interest over time. Lower potential returns, but much more stable than stocks. Good for near-term goals.</p>
+      <div class="concept-meta">
+        <div class="meta-item"><div class="meta-label">Risk level</div><div class="meta-val">Low–Medium</div></div>
+        <div class="meta-item"><div class="meta-label">Time horizon</div><div class="meta-val">1–10 years</div></div>
+        <div class="meta-item"><div class="meta-label">Avg return</div><div class="meta-val">~4–6%/yr</div></div>
+      </div>
+    </div>
+    <div class="concept-card etfs">
+      <span class="concept-tag etfs">ETFs</span>
+      <h3>Baskets of investments</h3>
+      <p>An ETF (Exchange-Traded Fund) holds dozens or hundreds of stocks in one package. Instead of picking one company, you buy a basket. One share of an ETF = automatic diversification. This is where most beginners should start.</p>
+      <div class="concept-meta">
+        <div class="meta-item"><div class="meta-label">Risk level</div><div class="meta-val">Medium</div></div>
+        <div class="meta-item"><div class="meta-label">Time horizon</div><div class="meta-val">5+ years</div></div>
+        <div class="meta-item"><div class="meta-label">Avg return</div><div class="meta-val">Varies</div></div>
+      </div>
+    </div>
+    <div class="concept-card index">
+      <span class="concept-tag index">Index Funds</span>
+      <h3>The whole market at once</h3>
+      <p>An index fund tracks a market index like the S&P 500 (the 500 largest US companies). You're not betting on one company — you're betting the US economy grows over time. Warren Buffett recommends them for most people.</p>
+      <div class="concept-meta">
+        <div class="meta-item"><div class="meta-label">Risk level</div><div class="meta-val">Medium</div></div>
+        <div class="meta-item"><div class="meta-label">Time horizon</div><div class="meta-val">10+ years</div></div>
+        <div class="meta-item"><div class="meta-label">Avg return</div><div class="meta-val">~10%/yr</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALCULATOR -->
+<section class="calculator-section" id="calculator">
+  <div class="section-header">
+    <div class="section-label">Compound Interest Calculator</div>
+    <h2 class="section-title">Watch your money grow.</h2>
+    <p class="section-sub">Drag the sliders to see what your investments could look like over time. This is the math that changes how people think about money.</p>
+  </div>
+  <div class="calc-wrap">
+    <div class="calc-inputs">
+      <div class="input-group">
+        <label>Starting amount <span id="lbl-start">$5,000</span></label>
+        <input type="range" id="inp-start" min="500" max="50000" step="500" value="5000" oninput="updateCalc()">
+      </div>
+      <div class="input-group">
+        <label>Monthly contribution <span id="lbl-monthly">$200</span></label>
+        <input type="range" id="inp-monthly" min="0" max="2000" step="25" value="200" oninput="updateCalc()">
+      </div>
+      <div class="input-group">
+        <label>Annual return rate <span id="lbl-rate">8%</span></label>
+        <input type="range" id="inp-rate" min="2" max="15" step="0.5" value="8" oninput="updateCalc()">
+      </div>
+      <div class="input-group">
+        <label>Time period <span id="lbl-years">20 years</span></label>
+        <input type="range" id="inp-years" min="1" max="40" step="1" value="20" oninput="updateCalc()">
+      </div>
+    </div>
+    <div class="calc-results">
+      <div class="result-row">
+        <div class="result-label">Total you put in</div>
+        <div class="result-val invested" id="res-invested">$53,000</div>
+      </div>
+      <div class="result-row">
+        <div class="result-label">Investment gains</div>
+        <div class="result-val returns" id="res-gains">+$157,432</div>
+      </div>
+      <div class="result-row">
+        <div class="result-label" style="font-weight:700;color:rgba(255,255,255,.9)">Final total</div>
+        <div class="result-val total" id="res-total">$210,432</div>
+      </div>
+      <div class="chart-bars" id="chart"></div>
+      <div class="chart-x">
+        <span id="cx0">0</span><span id="cx1"></span><span id="cx2"></span><span id="cx3"></span><span id="cx4"></span>
+      </div>
+      <div class="chart-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,.2)"></div>Amount invested</div>
+        <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div>Growth</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section class="steps-section" id="steps">
+  <div class="section-header">
+    <div class="section-label">Getting Started</div>
+    <h2 class="section-title">Your first four steps.</h2>
+    <p class="section-sub">You don't need a financial advisor or a lot of money to start. These four steps will get most people from zero to investing in under a week.</p>
+  </div>
+  <div class="steps-list">
+    <div class="step-item">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Build a $1,000 emergency fund first</h3>
+        <p>Before you invest a dollar, make sure you have at least $1,000 in a savings account you can access immediately. Investing money you might need in 3 months will force you to sell at the wrong time. Aim for 3 months of expenses, then start investing.</p>
+        <span class="step-tip">💡 High-yield savings accounts (HYSA) earn 4–5% while you build this buffer</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Open a tax-advantaged account</h3>
+        <p>A 401(k) through your employer or a Roth IRA lets your investments grow tax-free (or tax-deferred). This is free money you're leaving on the table if you skip it. If your employer matches 401(k) contributions, contribute at least enough to get the full match — that's an immediate 50–100% return on those dollars.</p>
+        <span class="step-tip">💡 Roth IRA contribution limit: $7,000/year (2024). Anyone with earned income can open one.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Choose a simple brokerage and invest in index funds</h3>
+        <p>Open an account with Fidelity, Vanguard, or Charles Schwab (all free). For most beginners: put everything into one or two broad index funds. Good starting options: <strong>VTI</strong> (total US stock market) or <strong>VOO</strong> (S&P 500). Don't try to pick individual stocks until you understand the basics.</p>
+        <span class="step-tip">💡 Fidelity and Schwab have no minimum to open. You can start with $1.</span>
+      </div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Automate and don't touch it</h3>
+        <p>Set up automatic monthly deposits to your investment account. Pick an amount you won't miss — even $50/month matters. Then <strong>do not check it every day</strong>. The biggest investing mistake is panic-selling during a market dip. Time in the market beats timing the market, every time.</p>
+        <span class="step-tip">💡 Studies show investors who check their portfolios less often get better returns.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISTAKES -->
+<section id="mistakes">
+  <div class="section-header">
+    <div class="section-label">Common Pitfalls</div>
+    <h2 class="section-title">Mistakes to avoid.</h2>
+    <p class="section-sub">These are the errors that cost beginners thousands. Learning about them now is free.</p>
+  </div>
+  <div class="mistakes-grid">
+    <div class="mistake-card">
+      <div class="mistake-x">✕</div>
+      <h3>Waiting until you have "enough" money</h3>
+      <p>Beginners often wait until they have $10,000+ to start. But time in the market is worth more than amount. Starting with $100 now beats starting with $10,000 in three years.</p>
+      <span class="fix-badge">✓ Fix: Start with whatever you have. Increase over time.</span>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-x">✕</div>
+      <h3>Panic-selling during a downturn</h3>
+      <p>Markets drop 10–20% regularly. Every major crash in history has eventually recovered and gone higher. Selling when it drops locks in your loss. Holding through it means you eventually profit.</p>
+      <span class="fix-badge">✓ Fix: Don't look at it. Automate. Think in decades.</span>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-x">✕</div>
+      <h3>Trying to pick winning stocks</h3>
+      <p>Even professional fund managers fail to beat the S&P 500 index consistently over 15+ years (roughly 90% of them). Individual stock picking is gambling for most people.</p>
+      <span class="fix-badge">✓ Fix: Buy the index, not individual stocks.</span>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-x">✕</div>
+      <h3>Ignoring fees</h3>
+      <p>A 1% annual fee sounds small. On $100,000 over 20 years, it costs you over $30,000 in lost growth. ETFs like VOO charge 0.03%. Always check the expense ratio before buying.</p>
+      <span class="fix-badge">✓ Fix: Choose funds with expense ratios under 0.2%.</span>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-x">✕</div>
+      <h3>Chasing last year's hot investment</h3>
+      <p>Crypto in 2021. AI stocks in 2023. Whatever went up 300% last year is already priced in. Chasing performance means buying high and usually selling low.</p>
+      <span class="fix-badge">✓ Fix: Boring, consistent index fund investing wins long-term.</span>
+    </div>
+    <div class="mistake-card">
+      <div class="mistake-x">✕</div>
+      <h3>Not using tax-advantaged accounts</h3>
+      <p>Investing in a regular brokerage when you haven't maxed your Roth IRA is leaving free money on the table. A Roth IRA lets your gains grow completely tax-free. That can mean tens of thousands extra by retirement.</p>
+      <span class="fix-badge">✓ Fix: Roth IRA first, then taxable brokerage.</span>
+    </div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section class="glossary-section" id="glossary">
+  <div class="section-header">
+    <div class="section-label">Key Terms</div>
+    <h2 class="section-title" style="color:white">The jargon, explained.</h2>
+    <p class="section-sub">Every term you'll encounter when you start investing, in plain English.</p>
+  </div>
+  <div class="glossary-grid">
+    <div class="term-card"><div class="term-word">401(k)</div><div class="term-def">A retirement savings account offered by employers. Contributions are pre-tax, reducing your taxable income now. Many employers match contributions — always get the full match.</div></div>
+    <div class="term-card"><div class="term-word">Roth IRA</div><div class="term-def">An individual retirement account where you contribute after-tax money. All growth and withdrawals in retirement are completely tax-free. Best for people who expect to be in a higher tax bracket later.</div></div>
+    <div class="term-card"><div class="term-word">Expense Ratio</div><div class="term-def">The annual fee a fund charges, expressed as a percentage. A 0.03% expense ratio on $10,000 = $3/year. Keep this as low as possible — fees compound just like returns do.</div></div>
+    <div class="term-card"><div class="term-word">Dividend</div><div class="term-def">A portion of a company's profits paid regularly to shareholders. If you own shares of Apple and Apple pays a dividend, you get cash — just for holding the stock.</div></div>
+    <div class="term-card"><div class="term-word">Diversification</div><div class="term-def">Not putting all your eggs in one basket. Owning stocks across many companies, industries, and countries reduces the risk that one bad company wipes out your portfolio.</div></div>
+    <div class="term-card"><div class="term-word">Bear Market</div><div class="term-def">When the stock market drops 20% or more from its recent high. Historically, bear markets last ~9–16 months and are always followed by recovery. They're buying opportunities, not disasters.</div></div>
+    <div class="term-card"><div class="term-word">Bull Market</div><div class="term-def">When the stock market is rising and investor confidence is high — typically defined as a 20%+ gain from a recent low. The S&P 500 has spent most of its history in bull markets.</div></div>
+    <div class="term-card"><div class="term-word">Dollar-Cost Averaging</div><div class="term-def">Investing a fixed amount at regular intervals regardless of price. When prices are low, you automatically buy more shares. When prices are high, you buy fewer. Removes emotion from investing.</div></div>
+    <div class="term-card"><div class="term-word">Compound Interest</div><div class="term-def">Earning returns on your returns. $100 that earns 10% becomes $110. Next year, 10% on $110 = $121. Over decades, this snowball effect creates wealth that feels like magic.</div></div>
+    <div class="term-card"><div class="term-word">Asset Allocation</div><div class="term-def">How you split your portfolio between different asset types (stocks, bonds, cash). A common guideline: 110 minus your age = % in stocks. 30 years old → 80% stocks, 20% bonds.</div></div>
+    <div class="term-card"><div class="term-word">Rebalancing</div><div class="term-def">Periodically adjusting your portfolio back to your target allocation. If stocks surge and you're now 90% stocks when you wanted 80%, you sell some stocks and buy bonds to rebalance.</div></div>
+    <div class="term-card"><div class="term-word">Capital Gains Tax</div><div class="term-def">Tax you pay when you sell an investment for a profit. Short-term (held &lt;1 year) = taxed as ordinary income. Long-term (held 1+ year) = 0–20% depending on income. This is why we buy and hold.</div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>The best time to start<br>was yesterday.</h2>
+  <p>The second best time is right now. Open a free brokerage account and make your first investment today — even if it's just $10.</p>
+  <a href="#steps" class="btn-white">Follow the 4 steps →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">First<span>Dollar</span></div>
+  <div class="footer-disclaimer">⚠ Educational content only. Nothing on this site is financial advice. All investing involves risk, including the possible loss of principal. Past performance does not guarantee future results. Consult a licensed financial advisor before making investment decisions.</div>
+  <div class="footer-links">
+    <a href="#why">Why Invest</a>
+    <a href="#concepts">Concepts</a>
+    <a href="#calculator">Calculator</a>
+    <a href="#glossary">Glossary</a>
+  </div>
+</footer>
+
+<script>
+// ── COMPOUND INTEREST CALCULATOR ──────────────────────────
+function fmt(n){ return '$'+Math.round(n).toLocaleString(); }
+
+function updateCalc(){
+  const start   = parseFloat(document.getElementById('inp-start').value);
+  const monthly = parseFloat(document.getElementById('inp-monthly').value);
+  const rate    = parseFloat(document.getElementById('inp-rate').value) / 100;
+  const years   = parseInt(document.getElementById('inp-years').value);
+  const mRate   = rate / 12;
+
+  document.getElementById('lbl-start').textContent   = fmt(start);
+  document.getElementById('lbl-monthly').textContent = fmt(monthly)+'/mo';
+  document.getElementById('lbl-rate').textContent    = (rate*100).toFixed(1)+'%';
+  document.getElementById('lbl-years').textContent   = years+' year'+(years!==1?'s':'');
+
+  // Calculate year-by-year for chart
+  const checkpoints = [];
+  const numPoints = 5;
+  for(let ci = 0; ci < numPoints; ci++){
+    const y = Math.round((ci / (numPoints-1)) * years);
+    const total = start * Math.pow(1+mRate, y*12) + monthly * ((Math.pow(1+mRate, y*12)-1)/mRate);
+    const invested = start + monthly * y * 12;
+    checkpoints.push({y, total, invested, growth: total - invested});
+  }
+
+  const final = checkpoints[numPoints-1];
+  document.getElementById('res-invested').textContent = fmt(final.invested);
+  document.getElementById('res-gains').textContent    = '+'+fmt(final.growth);
+  document.getElementById('res-total').textContent    = fmt(final.total);
+
+  // Draw bars
+  const chart = document.getElementById('chart');
+  chart.innerHTML = '';
+  const maxVal = final.total;
+
+  checkpoints.forEach((cp, i) => {
+    const bg = document.createElement('div');
+    bg.className = 'bar-group';
+    bg.style.flex = '1';
+
+    const b1 = document.createElement('div');
+    b1.className = 'bar invested-bar';
+    b1.style.flex = '1';
+    b1.style.height = (cp.invested / maxVal * 140) + 'px';
+    b1.title = 'Invested: '+fmt(cp.invested);
+
+    const b2 = document.createElement('div');
+    b2.className = 'bar growth-bar';
+    b2.style.flex = '1';
+    b2.style.height = (cp.growth / maxVal * 140) + 'px';
+    b2.title = 'Growth: '+fmt(cp.growth);
+
+    bg.appendChild(b1);
+    bg.appendChild(b2);
+    chart.appendChild(bg);
+  });
+
+  // X axis labels
+  for(let i = 0; i < numPoints; i++){
+    const el = document.getElementById('cx'+i);
+    if(el) el.textContent = 'Yr '+checkpoints[i].y;
+  }
+}
+
+updateCalc();
+
+// ── SCROLL ANIMATIONS ────────────────────────────────────
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.concept-card, .why-card, .step-item, .mistake-card, .term-card').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
